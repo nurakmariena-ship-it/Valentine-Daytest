@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Love Book</title>
+
+  <style>
+    body{
+      margin:0;
+      background:#0f1115;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+    }
+
+    #book{
+      width: 1000px;   /* desktop width */
+      height: 700px;   /* desktop height */
+    }
+
+    .page{
+      background:#fff;
+      box-sizing:border-box;
+      width:100%;
+      height:100%;
+      padding:50px 60px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      color:#111;
+    }
+
+    .page.text p{
+      font-size:19px;
+      line-height:1.7;
+      margin:0;
+      white-space:pre-line;
+    }
+
+    .page.image,
+    .page.cover{
+      padding:0;
+      background:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .page.image img,
+    .page.cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;   /* desktop looks better full-bleed */
+      display:block;
+    }
+
+    /* Responsive fallback (if window shrinks) */
+    @media (max-width:1100px){
+      #book{
+        width:95vw;
+        height:70vh;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="book"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/page-flip/dist/js/page-flip.browser.min.js"></script>
+
+<script>
+  const bookEl = document.getElementById("book");
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function textPage(text){
+    return `
+      <div class="page text">
+        <p>${escapeHtml(text)}</p>
+      </div>
+    `;
+  }
+
+  function imagePage(src){
+    return `
+      <div class="page image">
+        <img src="${src}" />
+      </div>
+    `;
+  }
+
+  function coverPage(src){
+    return `
+      <div class="page cover">
+        <img src="${src}" />
+      </div>
+    `;
+  }
+
+  const pages = [
+    coverPage("assets/cover.png"),
+    imagePage("assets/p0.png"),
+    textPage("This story is based on the beginning of our love and the inspiration of your painting"),
+    imagePage("assets/p2.png"),
+    textPage("Robin's heart had always been a compass pointing toward the unknown. From the snowy, jagged peaks of Zürich, he set out on a grand adventure that carried him through the neon-lit streets of Japan and the golden temples of Thailand. He was a traveler seeking something he couldn't yet name, his light brown hair tied back in a neat bun as he moved through the vibrant colors of the East. Little did he know that his long journey was leading him toward a tiny island in the Andaman Sea."),
+    imagePage("assets/p4.png"),
+    textPage("After weeks of wandering, Robin finally landed in Langkawi. He had been talking to a girl named Akma on Tinder, their messages bridging the gap between his world and hers. It was Akma's birthday, and as the plane glided over the turquoise waters, Robin looked out the window at the lush, emerald mountains rising like jewels from the ocean. He was arriving just in time to turn a digital connection into a living, breathing reality."),
+    imagePage("assets/p6.png"),
+    textPage("They finally met at a cozy beach bar where the air was thick with the scent of salt and the rhythm of the waves. Akma greeted him with a smile that felt warmer than the tropical sun, her long dark hair cascading over her shoulders. Surrounded by the laughter of friends and the glow of hanging lanterns, the thousands of miles between Switzerland and Malaysia simply vanished. In that moment, the world felt very small and very bright."),
+    imagePage("assets/p8.png"),
+    textPage("As the party faded, they wandered onto the sand under a canopy of oversized, glowing stars. The night was theirs. They plunged into the dark, velvety ocean, the water warm and bioluminescent against their skin. They spent hours swimming in the moonlight and talking on the shore, sharing secrets and dreams until the stars began to pale against the soft lavender of the approaching dawn."),
+    imagePage("assets/p10.png"),
+    textPage("When the sun finally rose, they shared a quiet breakfast by the sea. In a moment of pure, whimsical joy, they stood on the sand and reached toward one another, their arms forming a perfect heart against the horizon. In this magical space, the scenery shifted — the snowy mountains of Zürich and the tropical hills of Langkawi merged into a single, beautiful world, just like in the paintings Robin loved to create."),
+    imagePage("assets/p12.png"),
+    textPage("Eventually, the excitement of the long night caught up with them. Exhausted and happy, Akma dropped Robin off at his hostel. Once inside, the cool air and the quiet room were too much to resist. She sat on the edge of the bed for just a moment and fell into a deep, peaceful sleep. Beside her, her phone flickered one last time before the battery died, leaving her silent to the world outside."),
+    imagePage("assets/p14.png"),
+    textPage("Happy valentines day baby, always remember that I love you"),
+    imagePage("assets/p22.png")
+  ];
+
+  bookEl.innerHTML = pages.map(p => `<div class="my-page">${p}</div>`).join("");
+
+  const pageFlip = new St.PageFlip(bookEl, {
+    width: 500,
+    height: 700,
+    size: "stretch",
+    showCover: true,
+    usePortrait: false,   // DESKTOP: spread layout
+    singlePage: false,
+    maxShadowOpacity: 0.35
+  });
+
+  pageFlip.loadFromHTML(document.querySelectorAll(".my-page"));
+</script>
+
+</body>
+</html>
